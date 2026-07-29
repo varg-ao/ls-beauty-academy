@@ -51,10 +51,10 @@ function initCarousel(root){
   root.querySelector('.prev').addEventListener('click', () => goTo(index - 1));
   root.querySelector('.next').addEventListener('click', () => goTo(index + 1));
 
-  let auto = setInterval(() => goTo(index + 1), 5000);
+  let auto = setInterval(() => goTo(index + 1), 3000);
   root.addEventListener('mouseenter', () => clearInterval(auto));
   root.addEventListener('mouseleave', () => {
-    auto = setInterval(() => goTo(index + 1), 5000);
+  auto = setInterval(() => goTo(index + 1), 3000);
   });
 }
 
@@ -114,6 +114,12 @@ function initGalleryCarousel(root){
 
   prevBtn.addEventListener('click', () => goTo(index - 1));
   nextBtn.addEventListener('click', () => goTo(index + 1));
+
+  let auto = setInterval(() => goTo(index + 1), 3000);
+  root.addEventListener('mouseenter', () => clearInterval(auto));
+  root.addEventListener('mouseleave', () => {
+    auto = setInterval(() => goTo(index + 1), 3000);
+  });
 
   track.addEventListener('transitionend', () => {
     const items = Array.from(track.children);
