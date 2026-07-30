@@ -4,12 +4,12 @@
     // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
-            "type": "msedge",
+            "type": "editor-browser",
             "request": "launch",
-            "name": "Open index.html",
-            "file": "c:\\Users\\vaaar\\Desktop\\projetos\\site final\\index.html"
+            "name": "Iniciar o Navegador Integrado no localhost",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }

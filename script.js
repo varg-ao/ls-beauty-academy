@@ -25,6 +25,42 @@
     });
   }, { threshold: 0.15 });
   revealEls.forEach(el => io.observe(el));
+  // Contador animado de números
+function animateCounter(el){
+  const target = parseInt(el.getAttribute('data-target'), 10);
+  const suffix = el.getAttribute('data-suffix') || '';
+  const duration = 2000; // 2 segundos
+  const startTime = performance.now();
+
+  function update(now){
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - (1 - progress) * (1 - progress); // easeOutQuad
+    const current = Math.floor(eased * target);
+
+    el.textContent = '+' + current.toLocaleString('pt-BR') + suffix;
+
+    if (progress < 1){
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = '+' + target.toLocaleString('pt-BR') + suffix;
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+const counters = document.querySelectorAll('.counter');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      animateCounter(entry.target);
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+counters.forEach(el => counterObserver.observe(el));
 // Carrossel de fotos (seção Sobre)
 function initCarousel(root){
   const track = root.querySelector('.carousel-track');
@@ -51,10 +87,10 @@ function initCarousel(root){
   root.querySelector('.prev').addEventListener('click', () => goTo(index - 1));
   root.querySelector('.next').addEventListener('click', () => goTo(index + 1));
 
-  let auto = setInterval(() => goTo(index + 1), 3000);
+  let auto = setInterval(() => goTo(index + 1), 5000);
   root.addEventListener('mouseenter', () => clearInterval(auto));
   root.addEventListener('mouseleave', () => {
-  auto = setInterval(() => goTo(index + 1), 3000);
+  auto = setInterval(() => goTo(index + 1), 5000);
   });
 }
 
@@ -115,10 +151,10 @@ function initGalleryCarousel(root){
   prevBtn.addEventListener('click', () => goTo(index - 1));
   nextBtn.addEventListener('click', () => goTo(index + 1));
 
-  let auto = setInterval(() => goTo(index + 1), 3000);
+  let auto = setInterval(() => goTo(index + 1), 5000);
   root.addEventListener('mouseenter', () => clearInterval(auto));
   root.addEventListener('mouseleave', () => {
-    auto = setInterval(() => goTo(index + 1), 3000);
+    auto = setInterval(() => goTo(index + 1), 5000);
   });
 
   track.addEventListener('transitionend', () => {
